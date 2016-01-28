@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @EnableSwagger2
 @RestController
-@ComponentScan(basePackageClasses = {ToDoItemController.class, NotesController.class})
+@ComponentScan(basePackageClasses = {ToDoItemController.class, NotesController.class, DoItApplication.class})
 public class DoItApplication {
     @RequestMapping("/")
 	public String home() {
