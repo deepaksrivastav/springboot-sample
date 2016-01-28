@@ -16,9 +16,11 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @EnableSwagger2
+@RestController
 @ComponentScan(basePackageClasses = {ToDoItemController.class, NotesController.class})
 public class DoItApplication {
     @RequestMapping("/")
