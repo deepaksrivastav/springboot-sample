@@ -15,11 +15,16 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
 @EnableSwagger2
 @ComponentScan(basePackageClasses = {ToDoItemController.class, NotesController.class})
 public class DoItApplication {
+    @RequestMapping("/")
+	public String home() {
+		return "Hello Docker World";
+	}
 
     public static void main(String[] args) {
         SpringApplication.run(DoItApplication.class, args);
