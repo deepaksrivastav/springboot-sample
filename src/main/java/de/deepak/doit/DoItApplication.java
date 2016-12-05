@@ -31,7 +31,7 @@ public class DoItApplication {
     	InetAddress ipAddress;
 		try {
 			ipAddress = InetAddress.getLocalHost();
-			return ipAddress.getHostAddress();
+			return "Answering from : " + ipAddress.getHostAddress();
 		} catch (UnknownHostException e) {
 			return "Hello Docker World";
 		}
