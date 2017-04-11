@@ -19,6 +19,7 @@ public class NotesController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Note> getAllNotes(){
+        System.out.println("Changed to test image tagging");
         return noteRepo.findAll();
     }
 
