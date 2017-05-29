@@ -7,7 +7,8 @@
   </head>
 
   <body>
-    Running on: ${hostname}
+    Message Updated
+    Running on host: ${hostname}
   </body>
 </html>
 </#escape>
