@@ -7,7 +7,7 @@
   </head>
 
   <body>
-    Message Updated
+    New Message Now
     Running on host: ${hostname}
   </body>
 </html>
