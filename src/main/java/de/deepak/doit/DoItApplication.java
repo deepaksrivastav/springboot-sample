@@ -7,6 +7,7 @@ import com.uber.jaeger.Configuration;
 import com.uber.jaeger.samplers.ProbabilisticSampler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.google.common.base.Predicates;
 
 import de.deepak.doit.controller.NotesController;
 import de.deepak.doit.controller.ToDoItemController;
+import org.springframework.web.client.RestTemplate;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -24,9 +26,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableSwagger2
 @RestController
-@ComponentScan(basePackageClasses = {ToDoItemController.class, NotesController.class, DoItApplication.class})
 public class DoItApplication {
 
     @RequestMapping("/")
@@ -44,10 +44,17 @@ public class DoItApplication {
         SpringApplication.run(DoItApplication.class, args);
     }
 
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
+        return restTemplateBuilder.build();
+    }
+
+
     @Bean
     public io.opentracing.Tracer jaegerTracer() {
         return new Configuration("todo-notes", new Configuration.SamplerConfiguration(ProbabilisticSampler.TYPE, 1),
-                new Configuration.ReporterConfiguration(true, "jaeger-agent", 5775, 1000,1000))
+                new Configuration.ReporterConfiguration(false, "jaeger-agent", 5775,1000,100))
                 .getTracer();
     }
 

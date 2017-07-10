@@ -3,7 +3,9 @@ package de.deepak.doit.controller;
 import de.deepak.doit.model.Note;
 import de.deepak.doit.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -13,6 +15,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/note")
 public class NotesController {
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Autowired
     private NoteRepository noteRepo;
@@ -27,6 +32,9 @@ public class NotesController {
     public Note addNote(@RequestParam(name = "note") String note){
         Note noteVO = new Note();
         noteVO.setNote(note);
+        ResponseEntity<String> response = restTemplate.getForEntity(
+                "https://data.sparkfun.com/streams/dZ4EVmE8yGCRGx5XRX1W.json",
+                String.class);
         return noteRepo.saveAndFlush(noteVO);
     }
 
