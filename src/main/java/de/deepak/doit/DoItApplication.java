@@ -54,7 +54,7 @@ public class DoItApplication {
     @Bean
     public io.opentracing.Tracer jaegerTracer() {
         return new Configuration("todo-notes", new Configuration.SamplerConfiguration(ProbabilisticSampler.TYPE, 1),
-                new Configuration.ReporterConfiguration(false, "jaeger-agent", 5775,1000,100))
+                new Configuration.ReporterConfiguration(true, "jaeger-agent.test.svc.cluster.local", 5775,1000,100))
                 .getTracer();
     }
 
