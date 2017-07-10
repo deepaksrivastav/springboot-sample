@@ -3,6 +3,8 @@ package de.deepak.doit;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import com.uber.jaeger.Configuration;
+import com.uber.jaeger.samplers.ProbabilisticSampler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +28,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @RestController
 @ComponentScan(basePackageClasses = {ToDoItemController.class, NotesController.class, DoItApplication.class})
 public class DoItApplication {
+
     @RequestMapping("/")
 	public String home() {
     	InetAddress ipAddress;
@@ -39,6 +42,13 @@ public class DoItApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DoItApplication.class, args);
+    }
+
+    @Bean
+    public io.opentracing.Tracer jaegerTracer() {
+        return new Configuration("todo-notes", new Configuration.SamplerConfiguration(ProbabilisticSampler.TYPE, 1),
+                new Configuration.ReporterConfiguration(true, "jaeger-agent", 5775, 1000,1000))
+                .getTracer();
     }
 
     @Bean
